@@ -8,6 +8,6 @@
     <item name="ic_menu_new_adventure" type="drawable">@drawable/ic_adventure</item>
     <item name="ic_menu_fishing_adventures" type="drawable">@drawable/ic_fishing</item>
     <item name="ic_menu_hunting_adventures" type="drawable">@drawable/ic_hunting</item>
-    <item name="ic_menu_weather" type="drawable">@drawable/ic_weather</item>
+    <item name="ic_menu_weather_forecast" type="drawable">@drawable/ic_weather</item>
     <item name="ic_menu_profile" type="drawable">@android:drawable/ic_menu_edit</item>
 </resources>

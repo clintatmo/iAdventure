@@ -1,8 +1,11 @@
 package catmosoerodjo.sr.iadventure;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,
+        NewAdventureFragment.OnFragmentInteractionListener,
+        MyHuntingAdventuresFragment.OnFragmentInteractionListener,
+        MyFishingAdventuresFragment.OnFragmentInteractionListener,
+        WeatherForecastFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,20 +88,48 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_new_adventure) {
-            // Handle the camera action
-        } else if (id == R.id.nav_fishing_adventures) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+        Class fragmentClass;
 
-        } else if (id == R.id.nav_hunting_adventures) {
-
-        }else if (id == R.id.nav_weather) {
-
-        } else if (id == R.id.nav_profile) {
-
+        switch(id) {
+            case R.id.nav_new_adventure:
+                fragmentClass = NewAdventureFragment.class;
+                break;
+            case R.id.nav_fishing_adventures:
+                fragmentClass = MyFishingAdventuresFragment.class;
+                break;
+            case R.id.nav_hunting_adventures:
+                fragmentClass = MyHuntingAdventuresFragment.class;
+                break;
+            case R.id.nav_weather_forecast:
+                fragmentClass = WeatherForecastFragment.class;
+                break;
+            case R.id.nav_profile:
+                fragmentClass = ProfileFragment.class;
+                break;
+            default:
+                fragmentClass = NewAdventureFragment.class;
         }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
