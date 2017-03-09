@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_hunting_adventures) {
 
+        }else if (id == R.id.nav_weather) {
+
         } else if (id == R.id.nav_profile) {
 
         }

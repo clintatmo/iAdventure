@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_menu_hunting_adventures"
             android:title="My hunting adventures" />
         <item
+            android:id="@+id/nav_weather"
+            android:icon="@drawable/ic_menu_weather"
+            android:title="Weather forecast" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_profile"
             android:title="Profile" />
