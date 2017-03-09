@@ -1,4 +1,4 @@
-package catmosoerodjo.sr.iadventure;
+package catmosoerodjo.sr.wildadventure;
 
 import android.content.Context;
 import android.net.Uri;

@@ -1,4 +1,4 @@
-package catmosoerodjo.sr.iadventure;
+package catmosoerodjo.sr.wildadventure;
 
 import org.junit.Test;
 
