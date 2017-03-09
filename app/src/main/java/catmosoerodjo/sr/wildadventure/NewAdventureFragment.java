@@ -10,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +81,16 @@ public class NewAdventureFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+
+        MapView map = (MapView) view.findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+        map.setBuiltInZoomControls(true);
+        map.setMultiTouchControls(true);
+
+        IMapController mapController = map.getController();
+        mapController.setZoom(9);
+        GeoPoint startPoint = new GeoPoint(48.8583, 2.2944);
+        mapController.setCenter(startPoint);
 
         // Inflate the layout for this fragment
         return view;
