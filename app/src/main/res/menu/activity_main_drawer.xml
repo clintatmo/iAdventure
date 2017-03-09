@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_new_adventure"
+            android:icon="@drawable/ic_menu_new_adventure"
+            android:title="New adventure" />
+        <item
+            android:id="@+id/nav_fishing_adventures"
+            android:icon="@drawable/ic_menu_fishing_adventures"
+            android:title="My fishing adventures" />
+        <item
+            android:id="@+id/nav_hunting_adventures"
+            android:icon="@drawable/ic_menu_hunting_adventures"
+            android:title="My hunting adventures" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="Profile" />
+    </group>
+
+</menu>
