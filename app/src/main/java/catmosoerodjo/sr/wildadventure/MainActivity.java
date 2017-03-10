@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean checkPermission() {
         int WRITE_EXTERNAL_STORAGE_RESULT = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int ACCESS_COARSE_LOCATION_RESULT = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
-        int ACCESS_FINE_LOCATION_RESULT = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION);
-        if (WRITE_EXTERNAL_STORAGE_RESULT == PackageManager.PERMISSION_GRANTED && ACCESS_COARSE_LOCATION_RESULT == PackageManager.PERMISSION_GRANTED && ACCESS_FINE_LOCATION_RESULT == PackageManager.PERMISSION_GRANTED) {
+        if (WRITE_EXTERNAL_STORAGE_RESULT == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             return false;
@@ -82,18 +80,6 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this, Constants.WRITE_EXTERNAL_STORAGE_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
         } else {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            Toast.makeText(MainActivity.this, Constants.PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
-        }
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-            Toast.makeText(MainActivity.this, Constants.PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
         }
     }
 

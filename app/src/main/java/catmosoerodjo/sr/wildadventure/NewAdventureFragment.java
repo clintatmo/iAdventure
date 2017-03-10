@@ -1,19 +1,27 @@
 package catmosoerodjo.sr.wildadventure;
 
 import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+
+import catmosoerodjo.sr.wildadventure.util.Constants;
+import catmosoerodjo.sr.wildadventure.util.TrackGPS;
 
 
 /**
@@ -29,12 +37,15 @@ public class NewAdventureFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private TrackGPS gps;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
 
     public NewAdventureFragment() {
         // Required empty public constructor
@@ -88,9 +99,25 @@ public class NewAdventureFragment extends Fragment {
         map.setMultiTouchControls(true);
 
         IMapController mapController = map.getController();
-        mapController.setZoom(9);
-        GeoPoint startPoint = new GeoPoint(48.8583, 2.2944);
-        mapController.setCenter(startPoint);
+        mapController.setZoom(16);
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            Toast.makeText(getContext(), Constants.PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+        }
+
+        gps = new TrackGPS(container.getContext());
+
+        if(gps.canGetLocation()){
+
+            Location location = gps.getLocation();
+            GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+            mapController.setCenter(startPoint);
+
+        } else {
+            gps.showSettingsAlert();
+        }
 
         // Inflate the layout for this fragment
         return view;
