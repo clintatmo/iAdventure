@@ -19,6 +19,16 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.compass.CompassOverlay;
+import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
+import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.util.ArrayList;
 
 import catmosoerodjo.sr.wildadventure.util.Constants;
 import catmosoerodjo.sr.wildadventure.util.TrackGPS;
@@ -95,8 +105,21 @@ public class NewAdventureFragment extends Fragment {
 
         MapView map = (MapView) view.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-        map.setBuiltInZoomControls(true);
+        map.setBuiltInZoomControls(false);
         map.setMultiTouchControls(true);
+
+        MyLocationNewOverlay locationOverlay  = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
+        locationOverlay.enableMyLocation();
+        map.getOverlays().add(locationOverlay);
+
+        CompassOverlay compassOverlay = new CompassOverlay(getContext(), new InternalCompassOrientationProvider(getContext()), map);
+        compassOverlay.enableCompass();
+        map.getOverlays().add(compassOverlay);
+
+        RotationGestureOverlay rotationGestureOverlay = new RotationGestureOverlay(getContext(), map);
+        rotationGestureOverlay.setEnabled(true);
+        map.setMultiTouchControls(true);
+        map.getOverlays().add(rotationGestureOverlay);
 
         IMapController mapController = map.getController();
         mapController.setZoom(16);
@@ -114,6 +137,25 @@ public class NewAdventureFragment extends Fragment {
             Location location = gps.getLocation();
             GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
             mapController.setCenter(startPoint);
+            //your items
+            ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+            items.add(new OverlayItem("Me", "Start", startPoint)); // Lat/Lon decimal degrees
+
+            //the overlay
+            ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                @Override
+                public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                    return false;
+                }
+
+                @Override
+                public boolean onItemLongPress(int index, OverlayItem item) {
+                    return false;
+                }
+            }, getContext());
+            mOverlay.setFocusItemsOnTap(true);
+
+            map.getOverlays().add(mOverlay);
 
         } else {
             gps.showSettingsAlert();
