@@ -44,7 +44,7 @@ public class WeatherForecastFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    TextView textView;
+    private TextView textView;
 
     public WeatherForecastFragment() {
         // Required empty public constructor
@@ -81,11 +81,11 @@ public class WeatherForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_weather_forecast, container,false);
+        textView = (TextView) view.findViewById(R.id.weather_response);
         new HttpRequestTask().execute();
-        textView = (TextView) container.findViewById(R.id.weather_response);
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather_forecast, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -151,8 +151,7 @@ public class WeatherForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ResponseEntity<OpenWeatherObject> obj) {
-            //super.onPostExecute(obj);
-            if(textView != null) textView.setText("HELLO");
+            textView.setText("HELLO");
         }
 
     }
