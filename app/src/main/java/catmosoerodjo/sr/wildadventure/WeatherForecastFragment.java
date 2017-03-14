@@ -151,7 +151,7 @@ public class WeatherForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ResponseEntity<OpenWeatherObject> obj) {
-            textView.setText("HELLO");
+            textView.setText(obj.getBody().getName());
         }
 
     }
