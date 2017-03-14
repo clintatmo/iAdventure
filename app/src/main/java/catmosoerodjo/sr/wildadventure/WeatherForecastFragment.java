@@ -2,11 +2,27 @@ package catmosoerodjo.sr.wildadventure;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import catmosoerodjo.sr.wildadventure.dto.OpenWeatherObject;
+import catmosoerodjo.sr.wildadventure.util.Constants;
 
 
 /**
@@ -28,6 +44,7 @@ public class WeatherForecastFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    TextView textView;
 
     public WeatherForecastFragment() {
         // Required empty public constructor
@@ -63,6 +80,10 @@ public class WeatherForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        new HttpRequestTask().execute();
+        textView = (TextView) container.findViewById(R.id.weather_response);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_weather_forecast, container, false);
     }
@@ -104,5 +125,35 @@ public class WeatherForecastFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class HttpRequestTask extends AsyncTask<Object, Object, ResponseEntity<OpenWeatherObject>> {
+        @Override
+        protected ResponseEntity<OpenWeatherObject> doInBackground(Object... params) {
+            try {
+                final String url = "http://api.openweathermap.org/data/2.5/weather?lat=5.839398&lon=-55.199089&appid=d0fa46ed8c2e2d079ed1bd2408c2632b";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("x-api-key", Constants.OPEN_WEATHER_API_KEY);
+
+                Map<String, Double> parameters = new HashMap<>();
+                HttpEntity entity = new HttpEntity(headers);
+
+                return restTemplate.getForEntity(url, OpenWeatherObject.class);
+
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+
+            return new ResponseEntity<OpenWeatherObject>(HttpStatus.BAD_REQUEST);
+        }
+
+        @Override
+        protected void onPostExecute(ResponseEntity<OpenWeatherObject> obj) {
+            //super.onPostExecute(obj);
+            if(textView != null) textView.setText("HELLO");
+        }
+
     }
 }

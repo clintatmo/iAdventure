@@ -13,5 +13,5 @@ public class Constants {
     public static final String DOWNLOADING_FILE_NOTIFICATION = "Downloading file...";
     public static final String WRITE_EXTERNAL_STORAGE_PERMISSION_MESSAGE = "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.";
     public static final String PERMISSION_MESSAGE = "Please allow this permission in App Settings.";
-    public static final String NO_PDF_VIEWER_DETECTED = "No pdf viewer detected";
+    public static final String OPEN_WEATHER_API_KEY = "d0fa46ed8c2e2d079ed1bd2408c2632b";
 }

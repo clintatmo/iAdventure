@@ -108,9 +108,9 @@ public class NewAdventureFragment extends Fragment {
         map.setBuiltInZoomControls(false);
         map.setMultiTouchControls(true);
 
-        MyLocationNewOverlay locationOverlay  = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
-        locationOverlay.enableMyLocation();
-        map.getOverlays().add(locationOverlay);
+//        MyLocationNewOverlay locationOverlay  = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
+//        locationOverlay.enableMyLocation();
+//        map.getOverlays().add(locationOverlay);
 
         CompassOverlay compassOverlay = new CompassOverlay(getContext(), new InternalCompassOrientationProvider(getContext()), map);
         compassOverlay.enableCompass();
