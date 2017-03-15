@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.springframework.http.HttpEntity;
@@ -44,7 +46,14 @@ public class WeatherForecastFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private TextView textView;
+    private TextView weather_response_country;
+    private TextView weather_response_place;
+    private TextView weather_response_sunrise;
+    private TextView weather_response_sunset;
+    private ProgressBar progressBar;
+    private TextView weather_response_humidity;
+    private TextView weather_response_temp;
+    private View weather_response_data_layout;
 
     public WeatherForecastFragment() {
         // Required empty public constructor
@@ -82,7 +91,16 @@ public class WeatherForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_weather_forecast, container,false);
-        textView = (TextView) view.findViewById(R.id.weather_response);
+        weather_response_data_layout = view.findViewById(R.id.weather_response_data_layout);
+        weather_response_data_layout.setVisibility(View.GONE);
+        weather_response_country = (TextView) view.findViewById(R.id.weather_response_country);
+        weather_response_place = (TextView) view.findViewById(R.id.weather_response_place);
+        weather_response_sunrise = (TextView) view.findViewById(R.id.weather_response_sunrise);
+        weather_response_sunset = (TextView) view.findViewById(R.id.weather_response_sunset);
+        weather_response_humidity = (TextView) view.findViewById(R.id.weather_response_humidity);
+        weather_response_temp = (TextView) view.findViewById(R.id.weather_response_temp);
+
+        progressBar = (ProgressBar) view.findViewById(R.id.weather_response_loader);
         new HttpRequestTask().execute();
         // Inflate the layout for this fragment
         return view;
@@ -151,7 +169,14 @@ public class WeatherForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ResponseEntity<OpenWeatherObject> obj) {
-            textView.setText(obj.getBody().getName());
+            progressBar.setVisibility(View.GONE);
+            weather_response_data_layout.setVisibility(View.VISIBLE);
+            weather_response_country.setText(obj.getBody().getSys().getCountry());
+            weather_response_place.setText(obj.getBody().getName());
+            weather_response_sunrise.setText(String.valueOf(obj.getBody().getSys().getSunrise()));
+            weather_response_sunset.setText(String.valueOf(obj.getBody().getSys().getSunset()));
+            weather_response_humidity.setText(String.valueOf(obj.getBody().getMain().getHumidity()));
+            weather_response_temp.setText(String.valueOf(obj.getBody().getMain().getTemp()));
         }
 
     }
