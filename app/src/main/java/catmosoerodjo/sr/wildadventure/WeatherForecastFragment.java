@@ -145,6 +145,10 @@ public class WeatherForecastFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public double fahrenheitToCelsius(double fahrenheit) {
+        return Math.round(((fahrenheit - 32) * 5 / 9) * 100.0) / 100.0;
+    }
+
     public class HttpRequestTask extends AsyncTask<Object, Object, ResponseEntity<OpenWeatherObject>> {
         @Override
         protected ResponseEntity<OpenWeatherObject> doInBackground(Object... params) {
@@ -176,7 +180,8 @@ public class WeatherForecastFragment extends Fragment {
             weather_response_sunrise.setText(String.valueOf(obj.getBody().getSys().getSunrise()));
             weather_response_sunset.setText(String.valueOf(obj.getBody().getSys().getSunset()));
             weather_response_humidity.setText(String.valueOf(obj.getBody().getMain().getHumidity()));
-            weather_response_temp.setText(String.valueOf(obj.getBody().getMain().getTemp()));
+
+            weather_response_temp.setText(String.valueOf(fahrenheitToCelsius(obj.getBody().getMain().getTemp())));
         }
 
     }

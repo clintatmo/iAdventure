@@ -18,20 +18,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_vertical|center_horizontal">
+        android:layout_gravity="center_horizontal">
         <TextView
             android:id="@+id/weather_response_country"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:textSize="24dp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/weather_response_place"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:textSize="22dp"
+            android:textStyle="bold"/>
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="50dp" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
         <TableLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
             <TableRow>
@@ -78,12 +82,25 @@
         </TableLayout>
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
-        <TextView
-            android:id="@+id/weather_response_temp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_height="50dp" />
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+            <TableRow>
+                <TextView
+                    android:id="@+id/weather_response_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="26dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="C"/>
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 </FrameLayout>
