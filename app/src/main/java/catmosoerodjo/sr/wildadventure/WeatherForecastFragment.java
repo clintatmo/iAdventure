@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,6 +151,12 @@ public class WeatherForecastFragment extends Fragment {
         return Math.round(((fahrenheit - 32) * 5 / 9) * 100.0) / 100.0;
     }
 
+    public String convertTimeStampToTime(double timestamp){
+        Date date = new Date((long) timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        return sdf.format(date);
+    }
+
     public class HttpRequestTask extends AsyncTask<Object, Object, ResponseEntity<OpenWeatherObject>> {
         @Override
         protected ResponseEntity<OpenWeatherObject> doInBackground(Object... params) {
@@ -177,9 +185,9 @@ public class WeatherForecastFragment extends Fragment {
             weather_response_data_layout.setVisibility(View.VISIBLE);
             weather_response_country.setText(obj.getBody().getSys().getCountry());
             weather_response_place.setText(obj.getBody().getName());
-            weather_response_sunrise.setText(String.valueOf(obj.getBody().getSys().getSunrise()));
-            weather_response_sunset.setText(String.valueOf(obj.getBody().getSys().getSunset()));
-            weather_response_humidity.setText(String.valueOf(obj.getBody().getMain().getHumidity()));
+            weather_response_sunrise.setText(convertTimeStampToTime(obj.getBody().getSys().getSunrise()));
+            weather_response_sunset.setText(convertTimeStampToTime(obj.getBody().getSys().getSunset()));
+            weather_response_humidity.setText(String.valueOf(obj.getBody().getMain().getHumidity()) + "%");
 
             weather_response_temp.setText(String.valueOf(fahrenheitToCelsius(obj.getBody().getMain().getTemp())));
         }
